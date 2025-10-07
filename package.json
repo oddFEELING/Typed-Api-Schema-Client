@@ -1,6 +1,6 @@
 {
 	"name": "tasc-ts",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "Generate type-safe API clients from OpenAPI specs with full TypeScript support and IntelliSense",
 	"keywords": [
 		"api",
