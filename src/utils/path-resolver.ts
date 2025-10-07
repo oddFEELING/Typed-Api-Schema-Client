@@ -20,7 +20,7 @@ import type { ConfigOptions } from "../core/config.js";
  */
 export function resolveOutputPath(
   config: ConfigOptions,
-  type: "api_types" | "api_operations" | "doc_file",
+  type: "api_types" | "api_operations" | "doc_file" | "export_path",
   defaultFilename: string
 ): string {
   const basePath = config.outputs.base_path || "";
@@ -56,6 +56,7 @@ export function getResolvedPaths(config: ConfigOptions) {
     apiTypes: resolveOutputPath(config, "api_types", "types.ts"),
     apiOperations: resolveOutputPath(config, "api_operations", "operations.ts"),
     docFile: resolveOutputPath(config, "doc_file", "openapi.json"),
+    exportPath: resolveOutputPath(config, "export_path", "api-client.ts"),
   };
 }
 

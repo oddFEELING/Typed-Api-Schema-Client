@@ -283,9 +283,13 @@ function generateOperationFunction(operation: {
   jsdoc.push(`   * @operationId ${operationId}`);
   jsdoc.push(`   * @method ${method.toUpperCase()}`);
   jsdoc.push(`   * @path ${pathTemplate}`);
+  jsdoc.push(`   * @returns Promise with typed response data`);
   jsdoc.push("   */");
 
   const functionParams = params.join(", ");
+
+  // Add explicit return type for proper type inference
+  const returnType = `Promise<{ data: ResponseData<"${pathTemplate}", "${httpMethod}">; status: number; statusText: string; headers: any; config: any; }>`;
 
   let apiCall: string;
   if (hasRequestBody) {
@@ -303,5 +307,5 @@ function generateOperationFunction(operation: {
   }
 
   return `${jsdoc.join("\n")}
-  ${operationId}: (${functionParams}) => ${apiCall},\n`;
+  ${operationId}: (${functionParams}): ${returnType} => ${apiCall},\n`;
 }

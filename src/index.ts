@@ -20,6 +20,7 @@ export type { ConfigOptions, TascEnvironment } from "./core/config.js";
 // Generator utilities (for advanced users)
 export {
   fetchApiSpec,
+  generateClientFile,
   generateOperations,
   generateTypes,
   runGeneration,

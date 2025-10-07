@@ -10,6 +10,7 @@ type ConfigOptions = {
     api_types?: string;
     api_operations?: string;
     doc_file?: string;
+    export_path?: string;
   };
 };
 
