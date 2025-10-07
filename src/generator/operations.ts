@@ -140,23 +140,43 @@ type Operation<P extends keyof paths, M extends "get" | "post" | "put" | "delete
 
 /**
  * Extract request body type for a specific endpoint.
+ * Handles both optional (requestBody?) and required (requestBody) cases.
  * @example
  * type CreateUserBody = RequestBody<"/users", "post">;
  */
 export type RequestBody<P extends keyof paths, M extends "get" | "post" | "put" | "delete" | "patch"> = 
-  Operation<P, M> extends { requestBody: { content: { "application/json": infer T } } }
+  Operation<P, M> extends { requestBody?: { content: { "application/json": infer T } } }
+    ? T
+    : Operation<P, M> extends { requestBody: { content: { "application/json": infer T } } }
     ? T
     : never;
+
+/**
+ * Extracts all available status codes from an operation's responses.
+ * @example
+ * type UserStatusCodes = AvailableStatusCodes<"/users/{id}", "get">; // 200 | 404 | 500
+ */
+export type AvailableStatusCodes<
+  P extends keyof paths,
+  M extends "get" | "post" | "put" | "delete" | "patch"
+> = Operation<P, M> extends { responses: infer R }
+  ? R extends Record<string, unknown>
+    ? keyof R & number
+    : never
+  : never;
 
 /**
  * Extract response data type for a specific endpoint.
  * @example
  * type UserResponse = ResponseData<"/users/{id}", "get">;
+ * type UserResponse404 = ResponseData<"/users/{id}", "get", 404>;
  */
 export type ResponseData<
   P extends keyof paths, 
   M extends "get" | "post" | "put" | "delete" | "patch",
-  Status extends number = 200
+  Status extends AvailableStatusCodes<P, M> = 200 extends AvailableStatusCodes<P, M>
+    ? 200
+    : AvailableStatusCodes<P, M>
 > = Operation<P, M> extends {
   responses: { [K in Status]: { content: { "application/json": infer D } } };
 }
@@ -271,7 +291,8 @@ function generateOperationFunction(operation: {
   }
 
   if (hasRequestBody) {
-    params.push(`data: RequestBody<"${pathTemplate}", "${httpMethod}">`);
+    // Make data parameter use conditional typing to handle empty/optional bodies
+    params.push(`data?: RequestBody<"${pathTemplate}", "${httpMethod}">`);
   }
 
   params.push(`config?: TypedAxiosConfig<"${pathTemplate}", "${httpMethod}">`);
@@ -287,7 +308,7 @@ function generateOperationFunction(operation: {
   jsdoc.push("   */");
 
   const functionParams = params.join(", ");
-
+  
   // Add explicit return type for proper type inference
   const returnType = `Promise<{ data: ResponseData<"${pathTemplate}", "${httpMethod}">; status: number; statusText: string; headers: any; config: any; }>`;
 
