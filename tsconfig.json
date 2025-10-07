@@ -1,5 +1,11 @@
 {
-	"exclude": ["node_modules", "build", "tasc.config.ts", "tasc.config.js"],
+	"exclude": [
+		"node_modules",
+		"build",
+		"tasc.config.ts",
+		"tasc.config.js",
+		"original"
+	],
 	"compilerOptions": {
 		"lib": ["ESNext"],
 		"module": "nodenext",
@@ -13,6 +19,14 @@
 		"isolatedModules": true,
 		"outDir": "build",
 		"declaration": true,
-		"declarationMap": true
+		"declarationMap": true,
+		"preserveConstEnums": true,
+		"removeComments": false,
+		"stripInternal": false,
+		"declarationDir": "build",
+		"emitDeclarationOnly": false,
+		"composite": false,
+		"incremental": true,
+		"tsBuildInfoFile": "build/.tsbuildinfo"
 	}
 }

@@ -321,7 +321,10 @@ export function createApiClient<
 >(config: ApiClientConfig = {}) {
   const axiosInstance = createAxiosInstance(config);
 
-  return {
+  // Private cache for operations to enable lazy loading
+  let _operationsCache: TOperations | null = null;
+
+  const client = {
     /**
      * Sends a GET request to the given OpenAPI path.
      * Automatically handles paths with/without parameters and provides typed query params.
@@ -498,6 +501,16 @@ export function createApiClient<
      * await api.op.getUserById({ id: "123" });
      * ```
      */
-    op: {} as TOperations,
+    get op(): TOperations {
+      // Return cached operations if available, otherwise return empty operations object
+      // The actual operations will be set by createTypedApiClient or createOperations
+      return _operationsCache ?? ({} as TOperations);
+    },
+    set op(operations: TOperations) {
+      // Allow operations to be set by createTypedApiClient
+      _operationsCache = operations;
+    },
   };
+
+  return client;
 }
