@@ -394,7 +394,7 @@ export type {
   paths,
   RequestBody,
   ResponseData,
-  UnwrapData,
+  Raw,
   PathParams,
   QueryParams,
   ApiOperations,

@@ -194,18 +194,15 @@ export type ResponseData<
  * Unwraps the 'data' property from a wrapped API response.
  * Use this when your API returns { success, data, status } structure.
  * @example
- * type AddressData = UnwrapData<"/api/v1/address", "post">;
- * // Extracts just the 'data' property from { success, data, status }
+ * type AddressData = Raw<ResponseData<"/api/v1/address", "post">>;
+ * // Extracts: AddressResponse (not { success, data, status })
+ * 
+ * // Or directly:
+ * type AddressData = Raw<ResponseData<"/api/v1/address", "post", 201>>;
  */
-export type UnwrapData<
-  P extends keyof paths,
-  M extends "get" | "post" | "put" | "delete" | "patch",
-  Status extends AvailableStatusCodes<P, M> = 200 extends AvailableStatusCodes<P, M>
-    ? 200
-    : AvailableStatusCodes<P, M>
-> = ResponseData<P, M, Status> extends { data: infer D }
+export type Raw<T> = T extends { data: infer D }
   ? D
-  : ResponseData<P, M, Status>;
+  : T;
 
 /**
  * Extract query parameters type for a specific endpoint.

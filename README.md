@@ -481,6 +481,7 @@ import {
   createTypedApiClient,
   RequestBody, 
   ResponseData,
+  Raw,
   PathParams,
   QueryParams,
   type paths
@@ -498,6 +499,10 @@ type UserResponse = ResponseData<'/users/{id}', 'get'>;
 // Extract response for specific status code
 type UserCreatedResponse = ResponseData<'/users', 'post', 201>;
 
+// If your API wraps responses in { success, data, status }, use Raw to unwrap:
+type AddressData = Raw<ResponseData<'/address', 'post'>>;
+// Extracts just the inner data property
+
 // Extract path parameters for /users/{id}
 type UserPathParams = PathParams<'/users/{id}'>;
 // Result: { id: string | number }
@@ -511,10 +516,10 @@ async function createUser(input: CreateUserInput): Promise<UserResponse> {
   return response.data;
 }
 
-// Or use the operation directly
-async function getUser(id: string): Promise<UserResponse> {
-  const response = await api.op.getUserById({ id });
-  return response.data;
+// For wrapped responses
+async function createAddress(input: RequestBody<'/address', 'post'>): Promise<Raw<ResponseData<'/address', 'post'>>> {
+  const response = await api.op.createAddress(input);
+  return response.data.data; // First .data is Axios, second is your wrapper
 }
 ```
 
@@ -849,6 +854,22 @@ Extract response data type for a specific endpoint. Defaults to status 200.
 ```typescript
 type UserResponse = ResponseData<'/users/{id}', 'get'>;
 type UserCreated = ResponseData<'/users', 'post', 201>;
+```
+
+#### `Raw<ResponseType>`
+
+Unwraps the `data` property from wrapped API responses. Use when your API returns `{ success, data, status }` structure.
+
+```typescript
+// If your API returns: { success: true, data: AddressResponse, status: 201 }
+type FullResponse = ResponseData<'/address', 'post'>;
+// Result: { success: true, data: AddressResponse, status: 201 }
+
+type AddressData = Raw<ResponseData<'/address', 'post'>>;
+// Result: AddressResponse (just the inner data)
+
+// Composable with any response type
+type RawUser = Raw<ResponseData<'/users/{id}', 'get'>>;
 ```
 
 #### `PathParams<Path>`
