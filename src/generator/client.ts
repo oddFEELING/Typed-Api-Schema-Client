@@ -76,7 +76,10 @@ function generateClientFileContent(
  */
 
 import axios, { type AxiosInstance, type AxiosRequestConfig, type InternalAxiosRequestConfig, type AxiosResponse } from "axios";
-import type { paths } from "${operationsRelativePath.replace('/operations', '/types')}";
+import type { paths } from "${operationsRelativePath.replace(
+    "/operations",
+    "/types"
+  )}";
 import { createOperations, type ApiOperations } from "${operationsRelativePath}";
 
 /**

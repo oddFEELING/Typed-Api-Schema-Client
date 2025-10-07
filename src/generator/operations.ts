@@ -215,8 +215,12 @@ export const createOperations = (apiClient: any) => ({
     .map((op) => generateOperationFunction(op))
     .join("\n");
 
-  const footer = `});
+  const footer = `}) as const;
 
+/**
+ * Type representing all available API operations.
+ * This type is inferred from the createOperations return value for proper TypeScript support.
+ */
 export type ApiOperations = ReturnType<typeof createOperations>;
 
 /**
@@ -308,7 +312,7 @@ function generateOperationFunction(operation: {
   jsdoc.push("   */");
 
   const functionParams = params.join(", ");
-  
+
   // Add explicit return type for proper type inference
   const returnType = `Promise<{ data: ResponseData<"${pathTemplate}", "${httpMethod}">; status: number; statusText: string; headers: any; config: any; }>`;
 
