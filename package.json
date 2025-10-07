@@ -1,0 +1,75 @@
+{
+	"name": "tasc-ts",
+	"version": "0.0.1",
+	"description": "Generate type-safe API clients from OpenAPI specs with full TypeScript support and IntelliSense",
+	"keywords": [
+		"api",
+		"openapi",
+		"swagger",
+		"schema",
+		"client",
+		"typescript",
+		"codegen",
+		"type-safe",
+		"typesafe",
+		"rest",
+		"rest-api",
+		"api-client",
+		"openapi-client",
+		"swagger-client",
+		"typed",
+		"type-generation",
+		"http-client",
+		"axios",
+		"cli",
+		"generator",
+		"typescript-generator",
+		"openapi-generator",
+		"api-types",
+		"code-generation",
+		"openapi3",
+		"rest-client"
+	],
+	"homepage": "https://github.com/oddFEELING/Typed-Api-Schema-Client#readme",
+	"bugs": {
+		"url": "https://github.com/oddFEELING/Typed-Api-Schema-Client/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/oddFEELING/Typed-Api-Schema-Client.git"
+	},
+	"license": "ISC",
+	"author": "Emmanuel Alawode",
+	"type": "module",
+	"main": "build/src/index.js",
+	"types": "build/src/index.d.ts",
+	"bin": {
+		"tasc": "build/src/cli/index.js"
+	},
+	"files": [
+		"build",
+		"README.md"
+	],
+	"scripts": {
+		"build": "tsc",
+		"clean": "rm -rf build",
+		"rebuild": "npm run clean && npm run build",
+		"prepublishOnly": "npm run rebuild",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"dependencies": {
+		"axios": "^1.12.2",
+		"commander": "^12.1.0",
+		"openapi-typescript": "^7.9.1",
+		"pino": "^10.0.0",
+		"pino-pretty": "^13.1.1",
+		"tsx": "^4.20.6"
+	},
+	"devDependencies": {
+		"@types/node": "^24.7.0",
+		"typescript": "^5.9.3"
+	}
+}

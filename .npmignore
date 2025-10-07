@@ -1,0 +1,77 @@
+# Source files (we only publish the built files)
+src/
+*.ts
+!build/**/*.d.ts
+
+# Configuration files
+tsconfig.json
+.eslintrc*
+.prettierrc*
+
+# Documentation drafts
+DOC_PLAN.md
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__/
+test/
+tests/
+.tasc/
+
+# Git files
+.git/
+.gitignore
+.github/
+.gitattributes
+
+# CI/CD
+.travis.yml
+.gitlab-ci.yml
+azure-pipelines.yml
+circle.yml
+appveyor.yml
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# Coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# Build artifacts that aren't needed
+*.tgz
+
+# Example/test files
+file.ts
+example/
+examples/
+
+# Environment files
+.env
+.env.*
+
