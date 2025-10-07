@@ -275,25 +275,28 @@ function interpolatePath<T, P extends Paths<T>>(
 }
 
 /**
- * Type for the operation-based API methods.
- * This will be properly typed when operations are generated.
+ * Base type for operation-based API methods.
+ * The actual operations type is generated and will be much more specific.
+ * This exists only for the generic parameter default.
  */
-export type ApiOperations = Record<string, any>;
+export type ApiOperations = Record<string, (...args: any[]) => Promise<any>>;
 
 /**
  * Creates a typed API client instance with full OpenAPI type safety.
  *
  * @template T - The OpenAPI paths type (e.g., `paths` from generated types)
- * @template TOperations - The operations type (e.g., `ApiOperations` from generated operations)
+ * @template TOperations - The operations type from your generated operations file
  * @param config - Configuration options for the client
  * @returns A fully typed API client with HTTP methods and operation-based API
  *
  * @example
  * ```typescript
+ * // Manual usage (if not using createTypedApiClient from generated file)
  * import { createApiClient } from 'tasc-ts';
  * import type { paths } from './.tasc/types';
+ * import type { ApiOperations } from './.tasc/operations';
  *
- * export const apiClient = createApiClient<paths>({
+ * export const apiClient = createApiClient<paths, ApiOperations>({
  *   baseURL: process.env.API_URL,
  *   withCredentials: true,
  *   interceptors: {
@@ -308,13 +311,13 @@ export type ApiOperations = Record<string, any>;
  * // Use path-based API
  * await apiClient.get("/users/{id}", { id: "123" });
  *
- * // Use operation-based API
+ * // Use operation-based API (fully typed!)
  * await apiClient.op.getUserById({ id: "123" });
  * ```
  */
 export function createApiClient<
   T = Record<string, any>,
-  TOperations = ApiOperations
+  TOperations = Record<string, any>
 >(config: ApiClientConfig = {}) {
   const axiosInstance = createAxiosInstance(config);
 
