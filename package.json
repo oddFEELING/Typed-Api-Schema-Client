@@ -57,19 +57,32 @@
 		"prepublishOnly": "npm run rebuild",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
+	"engines": {
+		"node": ">=18.0.0",
+		"npm": ">=9.0.0"
+	},
 	"publishConfig": {
 		"access": "public"
 	},
+	"peerDependencies": {
+		"axios": "^1.0.0",
+		"typescript": ">=5.0.0"
+	},
+	"peerDependenciesMeta": {
+		"typescript": {
+			"optional": false
+		}
+	},
 	"dependencies": {
-		"axios": "^1.12.2",
 		"commander": "^12.1.0",
 		"openapi-typescript": "^7.9.1",
 		"pino": "^10.0.0",
-		"pino-pretty": "^13.1.1",
 		"tsx": "^4.20.6"
 	},
 	"devDependencies": {
 		"@types/node": "^24.7.0",
+		"axios": "^1.12.2",
+		"pino-pretty": "^13.1.1",
 		"typescript": "^5.9.3"
 	}
 }

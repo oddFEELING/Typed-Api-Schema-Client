@@ -23,6 +23,44 @@ npm install tasc-ts
 
 ---
 
+## 📑 Table of Contents
+
+- [🚀 Quick Start](#-quick-start)
+- [⚙️ Configuration](#️-configuration)
+  - [Config File Overview](#config-file-overview)
+  - [Configuration Options Reference](#configuration-options-reference)
+  - [Path Resolution Logic](#path-resolution-logic)
+  - [Full Config Example](#full-config-example)
+- [🔧 CLI Reference](#-cli-reference)
+  - [`tasc init`](#tasc-init)
+  - [`tasc config`](#tasc-config)
+  - [`tasc generate`](#tasc-generate)
+  - [`tasc watch`](#tasc-watch)
+- [📚 API Client Guide](#-api-client-guide)
+  - [Creating a Client Instance](#creating-a-client-instance)
+  - [Path-Based API](#path-based-api)
+  - [Operation-Based API](#operation-based-api)
+  - [Authentication Examples](#authentication-examples)
+  - [Error Handling](#error-handling)
+  - [Type Extraction](#type-extraction)
+- [💡 Examples](#-examples)
+  - [Next.js Integration](#nextjs-integration)
+  - [React Query Integration](#react-query-integration)
+  - [Express.js Backend](#expressjs-backend)
+  - [Testing with Vitest](#testing-with-vitest)
+- [📖 API Reference](#-api-reference)
+  - [`createApiClient<T, TOperations>`](#createapiclientt-toperations-config)
+  - [`ApiClientConfig`](#apiclientconfig)
+  - [HTTP Methods](#http-methods)
+  - [Generated Utility Types](#generated-utility-types)
+- [🔍 Troubleshooting](#-troubleshooting)
+- [❓ FAQ](#-faq)
+- [🛠️ Recommended Package Scripts](#️-recommended-package-scripts)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+
+---
+
 ## 🚀 Quick Start
 
 Get up and running in under 5 minutes:
@@ -96,6 +134,10 @@ const data = await api.op.getUserById({ id: '123' });
 ```
 
 ---
+
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
 
 ## ⚙️ Configuration
 
@@ -201,6 +243,10 @@ export default config;
 
 ---
 
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
+
 ## 🔧 CLI Reference
 
 ### `tasc init`
@@ -302,6 +348,10 @@ Example:
 - Press `Ctrl+C` to stop
 
 ---
+
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
 
 ## 📚 API Client Guide
 
@@ -527,6 +577,10 @@ async function createAddress(input: RequestBody<'/address', 'post'>): Promise<Ra
 
 ---
 
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
+
 ## 💡 Examples
 
 ### Next.js Integration
@@ -704,6 +758,10 @@ describe('API Client', () => {
 ```
 
 ---
+
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
 
 ## 📖 API Reference
 
@@ -899,6 +957,10 @@ type UsersQueryParams = QueryParams<'/users', 'get'>;
 
 ---
 
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
+
 ## 🔍 Troubleshooting
 
 ### Common Issues
@@ -971,6 +1033,10 @@ LOG_LEVEL=debug npx tasc generate
 
 ---
 
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
+
 ## ❓ FAQ
 
 **Q: Can I use this with JavaScript projects?**  
@@ -1011,6 +1077,10 @@ const config: ConfigOptions = {
 
 ---
 
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
+
 ## 🛠️ Recommended Package Scripts
 
 Add these scripts to your `package.json` for convenience:
@@ -1035,6 +1105,10 @@ npm run api:config      # View current config
 ```
 
 ---
+
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
 
 ## 🤝 Contributing
 
@@ -1074,11 +1148,19 @@ npm run dev
 
 ---
 
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
+
 ## 📄 License
 
 This project is licensed under the **ISC License**.
 
 ---
+
+<div align="right">
+  <a href="#-table-of-contents">⬆ Back to top</a>
+</div>
 
 ## 🙏 Acknowledgments
 
