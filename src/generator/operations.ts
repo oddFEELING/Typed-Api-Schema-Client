@@ -195,7 +195,7 @@ export const createOperations = (apiClient: any) => ({
     .map((op) => generateOperationFunction(op))
     .join("\n");
 
-  const footer = `}) as const;
+  const footer = `});
 
 export type ApiOperations = ReturnType<typeof createOperations>;
 
