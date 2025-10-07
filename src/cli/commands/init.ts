@@ -32,10 +32,14 @@ const config: ConfigOptions = {
     dir: "",
 
     // Individual file paths (only used if 'dir' is NOT set)
-    // Defaults: .tasc/types.ts, .tasc/operations.ts, .tasc/openapi.json
+    // Defaults: .tasc/types.ts, .tasc/operations.ts, .tasc/openapi.json, api-client.ts
     api_types: "",
     api_operations: "",
     doc_file: "",
+    
+    // Path for the auto-generated API client file (ready to use with interceptors)
+    // Default: api-client.ts (in base_path or root if no base_path)
+    export_path: "",
   },
 };
 

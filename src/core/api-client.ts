@@ -278,7 +278,7 @@ function interpolatePath<T, P extends Paths<T>>(
  * Type for the operation-based API methods.
  * This will be properly typed when operations are generated.
  */
-export type ApiOperations = Record<string, (...args: any[]) => Promise<any>>;
+export type ApiOperations = Record<string, any>;
 
 /**
  * Creates a typed API client instance with full OpenAPI type safety.
@@ -314,7 +314,7 @@ export type ApiOperations = Record<string, (...args: any[]) => Promise<any>>;
  */
 export function createApiClient<
   T = Record<string, any>,
-  TOperations extends ApiOperations = ApiOperations
+  TOperations = ApiOperations
 >(config: ApiClientConfig = {}) {
   const axiosInstance = createAxiosInstance(config);
 
