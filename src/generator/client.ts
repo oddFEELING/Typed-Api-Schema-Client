@@ -394,12 +394,11 @@ export type {
   paths,
   RequestBody,
   ResponseData,
+  UnwrapData,
   PathParams,
   QueryParams,
   ApiOperations,
+  AvailableStatusCodes,
 } from "${operationsRelativePath}";
-
-// Re-export utility types
-export type { AvailableStatusCodes } from "${operationsRelativePath}";
 `;
 }

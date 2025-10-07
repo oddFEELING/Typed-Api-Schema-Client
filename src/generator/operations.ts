@@ -167,6 +167,7 @@ export type AvailableStatusCodes<
 
 /**
  * Extract response data type for a specific endpoint.
+ * Handles multiple OpenAPI response structures for maximum compatibility.
  * @example
  * type UserResponse = ResponseData<"/users/{id}", "get">;
  * type UserResponse404 = ResponseData<"/users/{id}", "get", 404>;
@@ -181,7 +182,30 @@ export type ResponseData<
   responses: { [K in Status]: { content: { "application/json": infer D } } };
 }
   ? D
-  : never;
+  : Operation<P, M> extends {
+      responses: { [K in Status]: infer R };
+    }
+  ? R extends { content: { "application/json": infer D } }
+    ? D
+    : unknown
+  : unknown;
+
+/**
+ * Unwraps the 'data' property from a wrapped API response.
+ * Use this when your API returns { success, data, status } structure.
+ * @example
+ * type AddressData = UnwrapData<"/api/v1/address", "post">;
+ * // Extracts just the 'data' property from { success, data, status }
+ */
+export type UnwrapData<
+  P extends keyof paths,
+  M extends "get" | "post" | "put" | "delete" | "patch",
+  Status extends AvailableStatusCodes<P, M> = 200 extends AvailableStatusCodes<P, M>
+    ? 200
+    : AvailableStatusCodes<P, M>
+> = ResponseData<P, M, Status> extends { data: infer D }
+  ? D
+  : ResponseData<P, M, Status>;
 
 /**
  * Extract query parameters type for a specific endpoint.
