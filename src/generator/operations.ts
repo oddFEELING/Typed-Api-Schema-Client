@@ -175,18 +175,16 @@ export type AvailableStatusCodes<
 export type ResponseData<
   P extends keyof paths, 
   M extends "get" | "post" | "put" | "delete" | "patch",
-  Status extends AvailableStatusCodes<P, M> = 200 extends AvailableStatusCodes<P, M>
-    ? 200
-    : AvailableStatusCodes<P, M>
+  Status extends number = 200
 > = Operation<P, M> extends {
-  responses: { [K in Status]: { content: { "application/json": infer D } } };
+  responses: Record<Status, any>;
 }
-  ? D
-  : Operation<P, M> extends {
-      responses: { [K in Status]: infer R };
-    }
-  ? R extends { content: { "application/json": infer D } }
+  ? Operation<P, M>["responses"][Status] extends { content: { "application/json": infer D } }
     ? D
+    : Operation<P, M>["responses"][Status] extends { content: infer C }
+    ? C extends { "application/json": infer D }
+      ? D
+      : unknown
     : unknown
   : unknown;
 
@@ -215,14 +213,25 @@ export type QueryParams<P extends keyof paths, M extends "get" | "post" | "put" 
     : never;
 
 /**
+ * Helper type to extract all path parameter names from a path string.
+ * @example
+ * ExtractPathParamNames<"/users/{id}/posts/{postId}"> = "id" | "postId"
+ */
+type ExtractPathParamNames<T extends string> =
+  T extends \`\${string}{\${infer P}}\${infer R}\`
+    ? P | ExtractPathParamNames<R>
+    : never;
+
+/**
  * Extract path parameters type for a specific endpoint.
  * @example
  * type UserPathParams = PathParams<"/users/{id}">;
+ * // Result: { id: string | number }
  */
 export type PathParams<P extends keyof paths> = 
-  P extends \`\${string}{\${infer Param}}\${infer Rest}\`
-    ? { [K in Param | keyof PathParams<Rest>]: string | number }
-    : {};
+  ExtractPathParamNames<P & string> extends never
+    ? {}
+    : Record<ExtractPathParamNames<P & string>, string | number>;
 
 type TypedAxiosConfig<P extends keyof paths, M extends "get" | "post" | "put" | "delete" | "patch"> = 
   Omit<AxiosRequestConfig, "params"> & {
